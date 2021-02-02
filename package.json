@@ -5,8 +5,8 @@
   "main": "lib/index.min.js",
   "module": "es/index.js",
   "scripts": {
-    "babel": "cross-env BABEL_ENV=build babel src --out-dir dist/esm --copy-files && node build/esm",
-    "build": "cross-env BABEL_ENV=build node build",
+    "babel": "cross-env BABEL_ENV=build babel src --out-dir esm --copy-files && node build/esm",
+    "build": "cross-env BABEL_ENV=build node build/index",
     "test": "jest test/index --coverage=false",
     "prettier": "prettier --write \"docs/**/*.md\"",
     "lint": "./node_modules/.bin/eslint src/* test/* build/*",

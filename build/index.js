@@ -1,6 +1,5 @@
 const rollup = require('rollup')
 const configFactory = require('./rollup.config')
-const fs = require('fs')
 const util = require('util')
 const path = require('path')
 const { ncp } = require('ncp')
@@ -29,7 +28,7 @@ async function build(option) {
 
     build(configFactory({
       input: './src/index.js',
-      fileName: './dist/js-timers.min.js',
+      fileName: './js-timers.min.js',
     }))
 
     await promisify(ncp)('./types/', './')
