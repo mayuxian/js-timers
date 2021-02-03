@@ -6,7 +6,7 @@
  * @param {boolean} _isTimerStop -定时器是否停止
  * @param {boolean} _isTimerLoop -定时器是否循环,默认循环
  */
-export default class Timer {
+export  class Timer {
   constructor () {
     this._interval = 1000; //时间间隔，默认1s
     this._tick; //定时器触发事件
@@ -15,8 +15,7 @@ export default class Timer {
     this.timer = null;
   }
   checkFunction(func) {
-    const _toString = Object.prototype.toString;
-    return func && _toString.call(func) === '[object Function]'
+    return func && Object.prototype.toString.call(func) === '[object Function]'
   }
 
   ///时间间隔(单位毫秒ms)，默认1s
