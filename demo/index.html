@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/vue@next"></script>
+  <!-- import CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/element-plus/lib/theme-chalk/index.css">
+  <!-- import JavaScript -->
+  <script src="https://unpkg.com/element-plus/lib/index.full.js"></script>
+  <title>js-timers的Demo</title>
+  <style>
+    body {
+      width: 100;
+      height: 100%;
+      box-sizing: border-box;
+    }
+    .iframe {
+      width: 100;
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <script type="text/x-template" id="timers-tempalte">
+    <div>
+      <el-menu mode="horizontal"
+      :default-active="activeIndex"
+      @select="(key)=>activeIndex=key">
+        <el-menu-item index="1">
+          <span>timer测试</span>
+        </el-menu-item>
+        <el-menu-item index="2">
+          <span>count-donw-timer测试</span>
+        </el-menu-item>
+      </el-menu>
+      <iframe v-if="activeIndex==='1'" src="./timer.html" style="width:100%;height:100vh"  frameborder="0"></iframe>
+      <iframe v-if="activeIndex==='2'" src="./count-down-timer.html"  style="width:100%;height:100%" frameborder="0"></iframe>
+    </div>
+  </script>
+  <div id='app'>
+    <timers-demo></timers-demo>
+  </div>
+  <script>
+    const options = {
+      el: "#app",
+      data: function () {
+        return {
+        }
+      }
+    }
+    const app = Vue.createApp(options)
+    app.use(ElementPlus);
+    app.component("timers-demo", {
+      template: '#timers-tempalte',
+      data: function () {
+        return {
+          activeIndex: '1',
+        }
+      }
+    })
+    app.mount('#app')
+  </script>
+
+</body>
+
+</html>

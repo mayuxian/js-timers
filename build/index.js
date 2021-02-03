@@ -20,18 +20,12 @@ async function build(option) {
 
 (async () => {
   try {
-    // build(configFactory({
-    //   input: './src/count-down-timer.js',
-    //   fileName: './count-down-timer.min.js',
-    //   name: 'CountDownTimer'
-    // }))
-
     build(configFactory({
       input: './src/index.js',
       fileName: './js-timers.min.js',
     }))
 
-    await promisify(ncp)('./types/', './')
+    await promisify(ncp)(path.join(rootDir,'./types/'), './')
 
     // list locales
     // await listLocaleJson(locales)

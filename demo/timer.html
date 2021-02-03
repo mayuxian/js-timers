@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>timer</title>
+  <!-- 引入timer模块 -->
+  <script type="module">
+    import { timer, Timer } from './../esm/index.js';
+    window.timer = timer;
+    window.Timer = Timer;
+  </script>
+  <style>
+    body {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>timer的demo</h1>
+  <button onclick="onStart()">开始</button>
+  <button onclick="onStop()">暂停</button>
+  <!-- 暂时实现可以影响setInterval定时器的干扰方法 -->
+  <!-- <button onclick="onHinder()">干扰定时器</button> -->
+  <div>
+    默认timer实例 tick次数: <span id='timer'></span>
+  </div>
+  <div>
+    new Timer()实例 tick次数: <span id='newTimer'></span>
+  </div>
+  <div>
+    setInterval tick次数: <span id='setInterval'></span>
+  </div>
+  <ul id='ul'>
+  </ul>
+  <script>
+    const _interval = 1000;
+    var setIntervalInst = null
+    function onStart() {
+      start()
+      startNew();
+      startNative();
+    }
+    function onStop() {
+      timer.stop()
+      this.newTimer.stop();
+      clearInterval(this.setIntervalInst)
+    }
+    function start() {
+      let count = 0;
+      timer.interval = _interval
+      timer.tick = function () {
+        count++
+        showText('timer', count)
+      }
+      timer.start();
+    }
+    function startNew() {
+      this.newTimer = new Timer();
+      let count = 0;
+      this.newTimer.interval = _interval
+      this.newTimer.tick = function () {
+        count++
+        showText('newTimer', count)
+      }
+      this.newTimer.start();
+    }
+    function showText(eleId, text) {
+      const ele = document.getElementById(eleId);
+      ele.innerText = text
+    }
+    function startNative() {
+      let count = 0;
+      this.setIntervalInst = setInterval(() => {
+        count++
+        showText('setInterval', count)
+      }, _interval);
+    }
+    function onHinder() {
+      const ele = document.getElementById('ul');
+      let index = 0
+      setInterval(() => {
+        index++
+        const li = document.createElement("li");
+        li.innerText = '序号:' + index
+        ele.appendChild(li)
+
+        new Promise((resolve, reject) => {
+          setTimeout(() => {
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                resolve()
+              }, 600);
+            })
+            resolve()
+          }, 300);
+        })
+      }, 360);
+      setInterval(() => {
+        if (ele.children.length > 0) {
+          ele.removeChild(ele.children[0])
+        }
+      }, 2580);
+    }
+  </script>
+</body>
+
+</html>

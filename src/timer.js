@@ -14,6 +14,10 @@ export default class Timer {
     this._isTimerLoop = true;
     this.timer = null;
   }
+  checkFunction(func) {
+    const _toString = Object.prototype.toString;
+    return func && _toString.call(func) === '[object Function]'
+  }
 
   ///时间间隔(单位毫秒ms)，默认1s
   get interval() {
@@ -28,6 +32,9 @@ export default class Timer {
     return this._tick();
   }
   set tick(func) {
+    if (!this.checkFunction(func)) {
+      throw new Error(`tick is not function.`);
+    }
     this._tick = func;
   }
 
@@ -45,7 +52,7 @@ export default class Timer {
   }
 
   tickEvent() {
-    if (typeof (this._tick) != "function") {
+    if (!this.checkFunction(func)) {
       throw new Error(`tick:${this._tick},tick is not function.`);
     }
     if (!this._isTimerStop) {

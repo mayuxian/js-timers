@@ -1,6 +1,6 @@
-import Timer from './timer'
+import Timer from './timer.js'
 const timer = new Timer();
-export default {
+export {
   Timer,
   timer,
 }

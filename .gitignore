@@ -19,6 +19,7 @@ coverage
 /dist
 /esm
 /index.d.ts
+*.min.js
 
 #dev
 demo.js
