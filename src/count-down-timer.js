@@ -161,13 +161,10 @@ class CountDownTimer {
     this.start();
   }
   /*-----------------------------------------------*/
-
   /*----倒计时定时器触发事件------[私有方法]----------*/
-
   checkFunction(func) {
     return func && Object.prototype.toString.call(func) === '[object Function]'
   }
-
   countDownTimeout() {
     if (this.checkFunction(this.onTimeout)) {
       this.onTimeout();
@@ -187,7 +184,7 @@ class CountDownTimer {
   }
 }
 
-export {
+export default {
   CountDownTimer,
   CountDownTimerStatus,
   CountDownTimeoutMode

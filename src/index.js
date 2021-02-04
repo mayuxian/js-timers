@@ -1,10 +1,10 @@
 import { Timer } from './timer.js'
-import {
-  CountDownTimer, CountDownTimerStatus, CountDownTimeoutMode
-} from './count-down-timer.js'
+// import {
+//   CountDownTimer, CountDownTimerStatus, CountDownTimeoutMode
+// } from './count-down-timer.js'
 export {
   Timer,
-  CountDownTimer, 
-  CountDownTimerStatus,
-  CountDownTimeoutMode
+  // CountDownTimer,
+  // CountDownTimerStatus,
+  // CountDownTimeoutMode
 }

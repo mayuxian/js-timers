@@ -20,40 +20,72 @@
 
 <body>
   <h1>timer的demo</h1>
-  <button onclick="onStart()">开始</button>
-  <button onclick="onStop()">暂停</button>
+  <div style="margin:10px 0">
+    干扰while循环次数: <input id="hinderTotal" value="1000000000" style="width:120px" type="text">
+    <button onclick="onStart()">开始</button>
+    <button onclick="onStop()">暂停</button>
+  </div>
   <div>
-    new Timer()实例 tick次数: <span id='newTimer'></span>
+    new Timer() 定时器: <span id='newTimer'></span>
+  </div>
+  <div>
+    setInterval 定时器: <span id='setInterval'></span>
   </div>
   <script>
-    const _interval = 1000;
-    var setIntervalInst = null
+    function init() {
+      this.timerTickOffset = 0;
+      this.timerTickCount = 0;
+      this.setIntervalTickCount = 0;
+      this.setIntervalOffset = 0;
+      this.setIntervalInst = null;
+      this._interval = 1000;
+    }
     function onStart() {
+      this.startTime = new Date().getTime();
+      this.init();
       startNew();
       startNative();
     }
+    function onStop() {
+      this.newTimer.stop();
+      clearInterval(this.setIntervalInst)
+    }
     function startNew() {
       this.newTimer = new Timer();
-      let count = 0;
-      this.newTimer.interval = _interval
-      this.newTimer.tick = function () {
-        count++
-        showText('newTimer', count)
+      this.newTimer.interval = this._interval
+      this.newTimer.tick = () => {
+        this.timerTickCount++
+        let offset = new Date().getTime() - (this.startTime + this.timerTickCount * this._interval);
+        offset = offset % this._interval;
+        this.timerTickOffset += offset
+        showText('newTimer', `运行${this.timerTickCount}次 总误差:${this.timerTickOffset}ms 最后一次误差:${offset}ms`)
+        hinder();
       }
       this.newTimer.start();
+    }
+    function startNative() {
+      this.setIntervalInst = setInterval(() => {
+        this.setIntervalTickCount++;
+        const offset = new Date().getTime() - (this.startTime + this.setIntervalTickCount * this._interval);
+        this.setIntervalOffset += offset
+        showText('setInterval', `运行${this.setIntervalTickCount}次 总误差:${this.setIntervalOffset}ms 最后一次误差:${offset}ms`)
+        hinder();
+      }, this._interval);
+    }
+    function hinder() {
+      //干扰,模拟定时器触发函数中的执行耗时
+      let index = 0
+      // let maxIndex = Math.random() * total
+      let maxIndex = document.getElementById('hinderTotal').value?.trim() || 1000000000
+      maxIndex = Number(maxIndex)
+      while (index <= maxIndex) {
+        index++;
+      }
     }
     function showText(eleId, text) {
       const ele = document.getElementById(eleId);
       ele.innerText = text
     }
-    function startNative() {
-      let count = 0;
-      this.setIntervalInst = setInterval(() => {
-        count++
-        showText('setInterval', count)
-      }, _interval);
-    }
-
   </script>
 </body>
 

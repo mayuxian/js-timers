@@ -14,6 +14,7 @@ export class Timer {
     this.timer = null;
     this._startTime = null
     this._tickCount = 0;
+    this.missTickEnabled = true; //若延迟误差超过了间隔时间,则忽略miss掉中间,还是追加补偿tick
   }
 
   ///时间间隔(单位毫秒ms)，默认1s
@@ -36,19 +37,23 @@ export class Timer {
     this._tick = func;
   }
 
+  get missTickEnabled() {
+    return this._missTickEnabled;
+  }
+  set missTickEnabled(val) {
+    this._missTickEnabled = !!val
+  }
   // --------- public 方法------------
   start() {
     this._isTimerStop = false;
     this._startTime = new Date().getTime();
 
     clearTimeout(this.timer)
-    this.timer = setTimeout(() => {
-      this.tickEvent();
-    }, this._interval);
-
+    this.startSetTimeout()
   }
   stop() {
     this._isTimerStop = true;
+    this._tickCount = 0;
     clearTimeout(this.timer);
   }
   ///获取定时器是否停止状态
@@ -61,21 +66,34 @@ export class Timer {
     return func && Object.prototype.toString.call(func) === '[object Function]'
   }
 
+  startSetTimeout() {
+    this.timer = setTimeout(() => {
+      this.tickEvent();
+    }, this._interval);
+  }
+
   tickEvent() {
     if (!this.checkFunction(this._tick)) {
       this.stop();
       throw new Error(`tick:${this._tick},tick is not function.`);
     }
     if (!this._isTimerStop) {
-      this.offsetDiff();
       this._tickCount++
+      this.offsetDiff();
+      this.startSetTimeout();
       this._tick();
     }
   }
   offsetDiff() {
-    const offset = new Date().getTime() - (this._startTime + this._tickCount * this._initInterval);
+    let offset = new Date().getTime() - (this._startTime + this._tickCount * this._initInterval);
     console.log("误差：" + offset);
-    const nextTime = this._interval - offset;
-    this._interval = nextTime >= 0 ? nextTime : 0; //若下次时间小于0,表示偏差已经晚于下次时间,应该立即执行.
+    const nextTime = this._initInterval - offset;
+    if (nextTime < 0 && this._missTickEnabled) {
+      //若小于0,表示误差大于间隔,已经错过了一次tick,若错过tick,则应该排除多余的tick做补偿
+      this._interval = this._initInterval - Math.abs(nextTime) % this._initInterval
+
+    } else {
+      this._interval = nextTime >= 0 ? nextTime : 0;
+    }
   }
 };
