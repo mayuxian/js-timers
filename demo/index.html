@@ -9,6 +9,10 @@
   <link rel="stylesheet" href="https://unpkg.com/element-plus/lib/theme-chalk/index.css">
   <!-- import JavaScript -->
   <script src="https://unpkg.com/element-plus/lib/index.full.js"></script>
+  <script type="module">
+    import { CountDownTimer } from './../esm/count-down-timer.js';
+    window.CountDownTimer = CountDownTimer;
+  </script>
   <title>js-timers的Demo</title>
   <style>
     body {
@@ -20,6 +24,14 @@
 </head>
 
 <body>
+  <script type="text/x-template" id="countdowntimer-tempalte">
+    <div>
+      倒计时:<el-input v-model="seconds" size="small" style="width:100px"></el-input>秒
+      <el-button @click="onStart" size="small">开始</el-button>
+      <div>倒计时:{{remainSeconds}}s</div>
+      <div>{{message}}</div>
+    </div>
+  </script>
   <script type="text/x-template" id="timers-tempalte">
     <div>
       <el-menu mode="horizontal"
@@ -33,7 +45,8 @@
         </el-menu-item>
       </el-menu>
       <iframe v-if="activeIndex==='1'" src="./timer.html" style="width:100%;height:100vh"  frameborder="0"></iframe>
-      <iframe v-if="activeIndex==='2'" src="./count-down-timer.html"  style="width:100%;height:100%" frameborder="0"></iframe>
+      <countdowntimer-demo v-if="activeIndex==='2'"></countdowntimer-demo>
+      <!-- <iframe v-if="activeIndex==='2'" src="./count-down-timer.html"  style="width:100%;height:100%" frameborder="0"></iframe> -->
     </div>
   </script>
   <div id='app'>
@@ -56,6 +69,39 @@
           activeIndex: '1',
         }
       }
+    })
+    app.component("countdowntimer-demo", {
+      template: '#countdowntimer-tempalte',
+      // setup(props, context) {
+      //   const timer = new CountDownTimer();
+      //   const onStart = () => {
+
+      //   }
+      //   return { onStart }
+      // },
+      data: function () {
+        return {
+          remainSeconds: 100,
+          message: '',
+          seconds: 100,
+        }
+      },
+      created() {
+        this.timer = new CountDownTimer();
+
+        this.timer.tick = (remainSeconds) => {
+          this.remainSeconds = remainSeconds;
+        }
+        this.timer.onTimeout = () => {
+          this.message = '已超时'
+        }
+      },
+      methods: {
+        onStart() {
+          this.timer.timeoutSeconds = this.remainSeconds = this.seconds
+          this.timer.start();
+        }
+      },
     })
     app.mount('#app')
   </script>
