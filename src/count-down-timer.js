@@ -14,34 +14,34 @@ import Timer from './timer';
  * 操作时间定时器的状态
  * @desc 标记操作时间总计时器当前的操作状态
  */
+// const CountDownTimerStatus = Object.freeze({
+//   started: Symbol(0),
+//   stopped: Symbol(1),
+//   paused: Symbol(1)
+// })
 const CountDownTimerStatus = Object.freeze({
-  started: Symbol(0),
-  stopped: Symbol(1),
-  paused: Symbol(1)
-})
-// let CountDownTimerStatus = {
-//   //启动
-//   started: 0,
-//   //停止
-//   stopped: 1,
-//   //暂停
-//   paused: 2
-// };
+  //启动
+  started: 0,
+  //停止
+  stopped: 1,
+  //暂停
+  paused: 2
+});
 
 /**
  * 操作时间定时器的超时模式
  * @desc 指定操作超时是总是倒计时或输入则重置倒计时
  */
+// const CountDownTimeoutMode = Object.freeze({
+//   alawaysCountDown: Symbol(0),
+//   resetOnActivity: Symbol(1)
+// })
 const CountDownTimeoutMode = Object.freeze({
-  alawaysCountDown: Symbol(0),
-  resetOnActivity: Symbol(1)
-})
-// let CountDownTimeoutMode = {
-//   //总是倒计时
-//   alawaysCountDown: 0,
-//   //输入操作重置倒计时
-//   resetOnActivity: 1
-// };
+  //总是倒计时
+  alawaysCountDown: 0,
+  //输入操作重置倒计时
+  resetOnActivity: 1
+});
 
 const mainTimerInterval = 1000; //主要定时器时间间隔
 
@@ -114,11 +114,11 @@ class CountDownTimer {
   listenActiveEvent() {
     var body = document.querySelector('html');
     const activeFun = (event) => {
-      this.reset();
       body.removeEventListener("click", activeFun);
       body.removeEventListener("keydown", activeFun);
       body.removeEventListener("mousemove", activeFun);
       body.removeEventListener("mousewheel", activeFun)
+      this.reset();
     }
     body.addEventListener("click", activeFun);
     body.addEventListener("keydown", activeFun);
@@ -165,7 +165,7 @@ class CountDownTimer {
   /*----倒计时定时器触发事件------[私有方法]----------*/
 
   checkFunction(func) {
-    return func &&  Object.prototype.toString.call(func) === '[object Function]'
+    return func && Object.prototype.toString.call(func) === '[object Function]'
   }
 
   countDownTimeout() {
