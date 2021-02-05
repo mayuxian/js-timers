@@ -21,7 +21,7 @@ module.exports = (config) => {
       format: 'umd',
       name: name || 'timers',
       globals: {
-        dayjs: 'timers'
+        $timer: 'timers'
       }
     }
   }

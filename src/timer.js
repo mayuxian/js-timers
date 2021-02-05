@@ -40,7 +40,7 @@ export class Timer {
     return this._tick();
   }
   set tick(func) {
-    if (!this.checkFunction(func)) {
+    if (!this.isFunction(func)) {
       throw new Error(`tick is not function.`);
     }
     this._tick = func;
@@ -71,7 +71,7 @@ export class Timer {
   }
 
   //----------------- private 方法---------------------
-  checkFunction(func) {
+  isFunction(func) {
     return func && Object.prototype.toString.call(func) === '[object Function]'
   }
 
@@ -82,7 +82,7 @@ export class Timer {
   }
 
   tickEvent() {
-    if (!this.checkFunction(this._tick)) {
+    if (!this.isFunction(this._tick)) {
       this.stop();
       throw new Error(`tick:${this._tick},tick is not function.`);
     }

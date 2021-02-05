@@ -142,19 +142,19 @@ class CountDownTimer {
   }
   /*-----------------------------------------------*/
   /*----倒计时定时器触发事件------[私有方法]----------*/
-  checkFunction(func) {
+  isFunction(func) {
     return func && Object.prototype.toString.call(func) === '[object Function]'
   }
 
   mainTimerEvent() {
     this._remainingSeconds--;
-    if (this.checkFunction(this.tick)) {
+    if (this.isFunction(this.tick)) {
       this.tick(this._remainingSeconds)
     }
     if (this._remainingSeconds <= 0) {
       this._timerStatus = CountDownTimerStatus.stop;
       this.stop();
-      if (this.checkFunction(this.onTimeout)) {
+      if (this.isFunction(this.onTimeout)) {
         this.onTimeout();
       }
       return

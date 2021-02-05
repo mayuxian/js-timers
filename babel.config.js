@@ -5,6 +5,11 @@ module.exports = {
         "@babel/preset-env"
       ]
     },
+    "babel": {
+      "presets": [
+        "@babel/preset-env"
+      ]
+    },
     "build": {
       "presets": [
         [
