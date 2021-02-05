@@ -2,7 +2,7 @@
   "name": "js-timers",
   "version": "0.1.0-beta",
   "description": "timer,count-down-timer",
-  "main": "lib/index.min.js",
+  "main": "index.min.js",
   "module": "es/index.js",
   "scripts": {
     "babel": "cross-env BABEL_ENV=build babel src --out-dir esm --copy-files && node build/esm",
@@ -22,7 +22,6 @@
     "count-down",
     "countdown"
   ],
-  "files": [],
   "jest": {
     "roots": [
       "test"

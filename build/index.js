@@ -22,7 +22,7 @@ async function build(option) {
   try {
     build(configFactory({
       input: './src/index.js',
-      fileName: './js-timers.min.js',
+      fileName: './index.min.js',
     }))
 
     await promisify(ncp)(path.join(rootDir,'./types'), './')

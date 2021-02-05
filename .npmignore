@@ -20,6 +20,8 @@ build
 babel.config.js
 prettier.config.js
 .eslintrc.json
+.eslintignore
+.editorconfig
 
 #doc
 CONTRIBUTING.md
@@ -30,3 +32,4 @@ docs
 .github
 demo
 todo
+*.tgz
