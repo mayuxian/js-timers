@@ -19,68 +19,88 @@
 </head>
 
 <body>
-  <h1>timer的demo</h1>
+  <h1>new Time()定时器测试</h1>
   <div style="margin:10px 0">
-    干扰while循环次数: <input id="hinderTotal" value="1000000000" style="width:120px" type="text">
-    <button onclick="onStart()">开始</button>
-    <button onclick="onStop()">暂停</button>
+    干扰事件运行间隔时间(ms): <input id="timerIntervalCount" value="888" style="width:120px" type="text">
+    <button onclick="onTimerStart()">开始</button>
+    <button onclick="onTimerStop()">暂停</button>
+    <div>
+      new Timer() 定时器: <span id='newTimer'></span>
+    </div>
   </div>
-  <div>
-    new Timer() 定时器: <span id='newTimer'></span>
+  <h1>setInterval 定时器</h1>
+  <div style="margin:10px 0">
+    干扰事件运行间隔时间(ms): <input id="setIntervalCount" value="888" style="width:120px" type="text">
+    <button onclick="onSetIntervalStart()">开始</button>
+    <button onclick="onSetIntervalStop()">暂停</button>
+    <div>
+      setInterval 定时器: <span id='setInterval'></span>
+    </div>
   </div>
-  <div>
-    setInterval 定时器: <span id='setInterval'></span>
+  <h3>说明:</h3>
+  <div style="font-size:14px;color:red;">
+    基于JS是单线程,定时器运行过程中会受其他事件的执行影响导致定时器出现延迟,<br />
+    测试demo中使用如下代码作为干扰项:<br />
+    <div style="background:gray;color:#ffffff;width:300px">
+      <pre>
+      setInterval(function () {
+      let i = 0;
+      while (i++ < 1000000000); }, 888); 
+    </pre>
+    </div>
+    测试demo运行看到的现象:<br />
+    1.new Timer()出现误差后,会逐渐减少<br />
+    2.setInterval出现误差后,会逐渐累加变大<br />
+    <br />
+    原因:new Timer()主要是通过setTimeout实现定时器,并进行对干扰的误差进行补偿逐渐减少误差.<br />
   </div>
   <script>
-    function init() {
-      this.timerTickOffset = 0;
-      this.timerTickCount = 0;
-      this.setIntervalTickCount = 0;
-      this.setIntervalOffset = 0;
-      this.setIntervalInst = null;
-      this._interval = 1000;
-    }
-    function onStart() {
+    const _interval = 1000;
+    function onTimerStart() {
       this.startTime = new Date().getTime();
-      this.init();
+      this.timerTickCount = 0;
       startNew();
+    }
+    function onTimerStop() {
+      this.newTimer.stop();
+    }
+    function onSetIntervalStart() {
+      this.startSetIntervalTime = new Date().getTime();
+      this.setIntervalTickCount = 0;
+      this.setIntervalInst = null;
       startNative();
     }
-    function onStop() {
-      this.newTimer.stop();
+    function onSetIntervalStop() {
       clearInterval(this.setIntervalInst)
     }
     function startNew() {
+      hinder('timerIntervalCount');
       this.newTimer = new Timer();
-      this.newTimer.interval = this._interval
+      this.newTimer.interval = _interval
       this.newTimer.tick = () => {
         this.timerTickCount++
-        let offset = new Date().getTime() - (this.startTime + this.timerTickCount * this._interval);
-        offset = offset % this._interval;
-        this.timerTickOffset += offset
-        showText('newTimer', `运行${this.timerTickCount}次 总误差:${this.timerTickOffset}ms 最后一次误差:${offset}ms`)
-        hinder();
+        let offset = new Date().getTime() - (this.startTime + this.timerTickCount * _interval);
+        showText('newTimer', `运行${this.timerTickCount}次 总误差:${offset}ms`)
       }
       this.newTimer.start();
     }
     function startNative() {
+      hinder('setIntervalCount');
       this.setIntervalInst = setInterval(() => {
         this.setIntervalTickCount++;
-        const offset = new Date().getTime() - (this.startTime + this.setIntervalTickCount * this._interval);
-        this.setIntervalOffset += offset
-        showText('setInterval', `运行${this.setIntervalTickCount}次 总误差:${this.setIntervalOffset}ms 最后一次误差:${offset}ms`)
-        hinder();
-      }, this._interval);
+        const planTime = this.startSetIntervalTime + this.setIntervalTickCount * _interval;
+        const nowTime = new Date().getTime();
+        const offset = nowTime - planTime;
+        showText('setInterval', `运行${this.setIntervalTickCount}次 总误差:${offset}ms`)
+      }, _interval);
     }
-    function hinder() {
-      //干扰,模拟定时器触发函数中的执行耗时
-      let index = 0
-      // let maxIndex = Math.random() * total
-      let maxIndex = document.getElementById('hinderTotal').value?.trim() || 1000000000
-      maxIndex = Number(maxIndex)
-      while (index <= maxIndex) {
-        index++;
-      }
+    function hinder(eleId) {
+      // 干扰,模拟定时器触发函数中的执行耗时
+      let maxSeconds = document.getElementById(eleId).value?.trim() || 1000
+      setInterval(function () {
+        let i = 0;
+        while (i++ < 1000000000);
+      }, maxSeconds);
     }
     function showText(eleId, text) {
       const ele = document.getElementById(eleId);

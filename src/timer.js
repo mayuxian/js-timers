@@ -14,7 +14,8 @@ export class Timer {
     this.timer = null;
     this._startTime = null
     this._tickCount = 0;
-    this.missTickEnabled = true; //若延迟误差超过了间隔时间,则忽略miss掉中间,还是追加补偿tick
+    this.missTickEnabled = false; //若延迟误差超过了间隔时间,则忽略miss掉中间,还是追加补偿tick
+    this._delta = 0; //由于补偿后,在执行setTimeout时,仍会消耗1-2 ms导致1-2 ms误差,若还需要差量补偿,可以更改这个参数
   }
 
   ///时间间隔(单位毫秒ms)，默认1s
@@ -24,6 +25,14 @@ export class Timer {
   set interval(seconds) {
     this._interval = seconds;
     this._initInterval = seconds;
+  }
+
+  //差量,因为setTimeout的js执行也需要时间,所以可以设置差量,达到最小误差.
+  get delta() {
+    return this._delta;
+  }
+  set delta(val) {
+    this._delta = val;
   }
 
   ///时间定时器定时执行函数
@@ -69,7 +78,7 @@ export class Timer {
   startSetTimeout() {
     this.timer = setTimeout(() => {
       this.tickEvent();
-    }, this._interval);
+    }, this._interval - this._delta);
   }
 
   tickEvent() {
@@ -86,7 +95,7 @@ export class Timer {
   }
   offsetDiff() {
     let offset = new Date().getTime() - (this._startTime + this._tickCount * this._initInterval);
-    console.log("误差：" + offset);
+    // console.log("误差：" + offset);  //由于补偿后,在执行setTimeout时,仍会消耗1-2 ms导致1-2 ms误差,
     const nextTime = this._initInterval - offset;
     if (nextTime < 0 && this._missTickEnabled) {
       //若小于0,表示误差大于间隔,已经错过了一次tick,若错过tick,则应该排除多余的tick做补偿
