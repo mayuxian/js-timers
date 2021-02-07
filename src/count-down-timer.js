@@ -1,8 +1,7 @@
 import { Timer } from './timer.js';
 
 /**
- * 操作时间定时器的状态
- * @desc 标记操作时间总计时器当前的操作状态
+ * Enum: Status
  */
 const CountDownTimerStatus = Object.freeze({
   //运行
@@ -14,17 +13,18 @@ const CountDownTimerStatus = Object.freeze({
 });
 
 /**
- * 操作时间定时器的超时模式
- * @desc 指定操作超时是总是倒计时或输入则重置倒计时
+ * Enum: Mode
  */
 // const CountDownTimeoutMode = Object.freeze({
-//   always: Symbol(0),
+//   loop: Symbol(0),
 //   reset: Symbol(1)
 // })
 const CountDownTimeoutMode = Object.freeze({
-  //总是倒计时
-  always: 'always',
-  //输入操作重置倒计时
+  //Stop when the countdown is over
+  once: 'once',
+  //after the timer stop,restart
+  loop: 'loop',
+  //reset countdown after user operation
   reset: 'reset'
 });
 
@@ -32,10 +32,10 @@ const CountDownTimeoutMode = Object.freeze({
  */
 class CountDownTimer {
   constructor () {
-    this._remainingSeconds = 0;
-    this._timeoutSeconds = 0;
+    this._remainingSeconds = 60;
+    this._timeoutSeconds = 60;
     this._timerStatus = CountDownTimerStatus.pause; //操作定时状态
-    this._timeoutMode = CountDownTimeoutMode.always; // 操作超时模式
+    this._timeoutMode = CountDownTimeoutMode.once; // 操作超时模式
     this.onTimeout = null;//超时触发器
     this.tick = null;//倒计时触发器
 
@@ -60,6 +60,7 @@ class CountDownTimer {
   }
   set timeoutSeconds(seconds) {
     this._timeoutSeconds = seconds;
+    this._remainingSeconds = seconds;
   }
 
   //定时器状态
@@ -134,7 +135,7 @@ class CountDownTimer {
 
   //重置倒计时
   reset() {
-    if (this._timerStatus == CountDownTimerStatus.stop) {
+    if (this._timerStatus === CountDownTimerStatus.stop) {
       return;
     }
     this.stop();
@@ -149,20 +150,28 @@ class CountDownTimer {
   mainTimerEvent() {
     this._remainingSeconds--;
     if (this.isFunction(this.tick)) {
+      if (this._remainingSeconds <= 0 && this._timeoutMode === CountDownTimeoutMode.loop) {
+        this._remainingSeconds = this._timeoutSeconds;
+      }
+      //tick事件需在ontimeout之前触发
       this.tick(this._remainingSeconds)
     }
     if (this._remainingSeconds <= 0) {
-      this._timerStatus = CountDownTimerStatus.stop;
-      this.stop();
+      if (this._timeoutMode === CountDownTimeoutMode.once) {
+        this._timerStatus = CountDownTimerStatus.stop;
+        this.stop();
+      } else if (this._timeoutMode === CountDownTimeoutMode.loop) {
+        this.reset()
+      }
+      //loop模式,每次也应该触发超时事件
       if (this.isFunction(this.onTimeout)) {
         this.onTimeout();
       }
-      return
     }
   }
 }
 
-export  {
+export {
   CountDownTimer,
   CountDownTimerStatus,
   CountDownTimeoutMode

@@ -1,16 +1,12 @@
  /**
- * 时间定时器
- * @desc 时间定时器
- * @param {function} tick - 定时触发事件
- * @param {int} interval -事件间隔 - 事件
- * @param {boolean} _isTimerStop -定时器是否停止
+ * Class:  Timer
  */
 export class Timer {
   constructor () {
-    this._interval = 1000 //时间间隔，默认1s
-    this._initInterval = 1000//初始化设置的间隔
-    this._tick //定时器触发事件
-    this._isTimerStop = false//定时器是否停止事件
+    this._interval = 1000 
+    this._initInterval = 1000
+    this._tick 
+    this._isTimerStop = false//Whether is the immediately stop
     this.timer = null
     this._startTime = null
     this._tickCount = 0

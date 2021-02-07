@@ -28,11 +28,20 @@
     <div>
       倒计时:<el-input v-model="seconds" size="small" style="width:100px"></el-input>秒
       <el-button @click="onStart" size="small">开始</el-button>
+     <div style="margin:10px 0">
+      模式:
+      <el-radio-group v-model="countDownMode" size="medium">
+        <el-radio-button label="once">once</el-radio-button>
+        <el-radio-button label="loop">loop</el-radio-button>
+        <el-radio-button label="reset">reset</el-radio-button>
+      </el-radio-group>
+     </div>
       <div>倒计时:{{remainSeconds}}s</div>
       <div>{{message}}</div>
     </div>
   </script>
   <script type="text/x-template" id="timers-tempalte">
+    Note: You can view the demo by installing http-server, and then running JS-timers root directory boot
     <div>
       <el-menu mode="horizontal"
       :default-active="activeIndex"
@@ -43,9 +52,9 @@
         <el-menu-item index="2">
           <span>count-donw-timer测试</span>
         </el-menu-item>
-        <el-menu-item index="3">
+        <!-- <el-menu-item index="3">
           <span>http-timer测试</span>
-        </el-menu-item>
+        </el-menu-item> -->
       </el-menu>
       <iframe v-if="activeIndex==='1'" src="./timer.html" style="width:100%;height:100vh"  frameborder="0"></iframe>
       <countdowntimer-demo v-if="activeIndex==='2'"></countdowntimer-demo>
@@ -75,35 +84,52 @@
     })
     app.component("countdowntimer-demo", {
       template: '#countdowntimer-tempalte',
-      // setup(props, context) {
-      //   const timer = new CountDownTimer();
-      //   const onStart = () => {
-
-      //   }
-      //   return { onStart }
-      // },
       data: function () {
         return {
-          remainSeconds: 100,
+          // remainSeconds: 10,
           message: '',
-          seconds: 100,
+          seconds: 10,
+          countDownMode: 'once',
+          timer: {
+            remainingSeconds: 10
+          }
+        }
+      },
+      computed: {
+        remainSeconds() {
+          const val = this.timer.remainingSeconds;
+          console.log(val)
+          return val;
         }
       },
       created() {
         this.timer = new CountDownTimer();
-
-        this.timer.tick = (remainSeconds) => {
-          this.remainSeconds = remainSeconds;
-        }
+        // this.timer.tick = (remainSeconds) => {
+        //   this.remainSeconds = remainSeconds;
+        // }
+        // this.$watch('timer.remainingSeconds', (remainSeconds) => {
+        //   this.remainSeconds = remainSeconds;
+        // })
         this.timer.onTimeout = () => {
           this.message = '已超时'
         }
       },
       methods: {
         onStart() {
-          this.timer.timeoutSeconds = this.remainSeconds = this.seconds
+          this.timer.stop();
+          this.message = '';
+          this.timer.timeoutMode = this.countDownMode;
+          this.timer.timeoutSeconds = this.seconds
           this.timer.start();
         }
+      },
+      watch: {
+        'timer.remainingSeconds': {
+          // deep: true,
+          handler(newVal, oldval) {
+            // this.remainSeconds = newVal
+          },
+        },
       },
     })
     app.mount('#app')
