@@ -9,7 +9,7 @@ module.exports = {
   },
   testEnvironment: 'jsdom',
   transform: {
-    '^.+\\.vue$': 'vue-jest',
+    // '^.+\\.vue$': 'vue-jest',
     '^.+\\.(t|j)sx?$': [
       'babel-jest', {
         presets: [
@@ -21,7 +21,7 @@ module.exports = {
               },
             },
           ],
-          '@babel/preset-typescript',
+          // '@babel/preset-typescript',
         ],
         plugins: [
           '@vue/babel-plugin-jsx',
