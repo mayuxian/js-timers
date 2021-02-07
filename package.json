@@ -20,10 +20,13 @@
     "lint"
   ],
   "keywords": [
-    "js-timers",
+    "time",
     "timer",
-    "count-down",
-    "countdown"
+    "clock",
+    "settimeout",
+    "js-timers",
+    "countdown",
+    "count-down"
   ],
   "jest": {
     "roots": [
