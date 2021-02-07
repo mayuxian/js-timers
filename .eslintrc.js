@@ -2,20 +2,20 @@ module.exports = {
     env: {
         "browser": true,
         "node": true,
-        "es2021": true,
-        "jest/globals": true
+        // "es2021": true,
+        // "jest/globals": true
     },
     globals: {
         "window": true,
     },
     extends: [
         "eslint:recommended",
-        "plugin:jest/recommended",
+        // "plugin:jest/recommended",
         // "plugin:vue/essential",
         // "plugin:@typescript-eslint/recommended"
     ],
     parserOptions: {
-        "ecmaVersion": 12,
+        ecmaVersion: 2020,
         // "parser": "@typescript-eslint/parser",
         "sourceType": "module"
     },

@@ -3,7 +3,8 @@
   "version": "0.1.0-beta",
   "description": "timer,count-down-timer",
   "main": "index.min.js",
-  "module": "es/index.js",
+  "module": "esm/index.js",
+  "types": "index.d.ts",
   "scripts": {
     "babel": "cross-env BABEL_ENV=build babel src --out-dir esm --copy-files && node build/esm",
     "build": "cross-env BABEL_ENV=build node build/index",
@@ -40,6 +41,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/mayuxian/js-timers.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mayuxian/js-timers/issues"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",

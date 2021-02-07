@@ -6,11 +6,10 @@ module.exports = (config) => {
   return {
     input: {
       input,
-      external: [
-        'timers'
-      ],
+      external: [],
       plugins: [
         babel({
+          babelHelpers: 'bundled',
           exclude: 'node_modules/**'
         }),
         uglify()
@@ -19,10 +18,8 @@ module.exports = (config) => {
     output: {
       file: fileName,
       format: 'umd',
-      name: name || 'timers',
-      globals: {
-        $timer: 'timers'
-      }
+      name: name || '$timers',
+      globals: {}
     }
   }
 }
