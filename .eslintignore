@@ -1,5 +1,2 @@
 .cache/
 node_modules/
-/build
-/lib
-/public
