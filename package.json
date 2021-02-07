@@ -1,18 +1,18 @@
 {
   "name": "js-timers",
-  "version": "0.1.0-beta",
-  "description": "timer,count-down-timer",
+  "version": "0.2.0-beta",
+  "description": "timer: Timer used in browser,More accurate than setInterval; count-down-timer;",
   "main": "index.min.js",
   "module": "esm/index.js",
   "types": "index.d.ts",
+  "private": false,
   "scripts": {
     "babel": "cross-env BABEL_ENV=build babel src --out-dir esm --copy-files && node build/esm",
     "build": "cross-env BABEL_ENV=build node build/index",
     "test": "jest test/index --coverage=false",
     "prettier": "prettier --write \"docs/**/*.md\"",
     "lint": "./node_modules/.bin/eslint src/* test/* build/*",
-    "v": "node build/update-version.js",
-    "pub": "npm run lib && npm publish",
+    "pub": "npm publish",
     "link:add": "yarn link && yarn link %npm_package_name%",
     "link:remove": "yarn unlink %npm_package_name% && yarn unlink"
   },
