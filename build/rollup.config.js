@@ -1,4 +1,4 @@
-const babel = require('rollup-plugin-babel')
+const { babel } = require('@rollup/plugin-babel')
 const uglify = require('rollup-plugin-uglify')
 
 module.exports = (config) => {
