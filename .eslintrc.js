@@ -1,6 +1,7 @@
 module.exports = {
     env: {
         "browser": true,
+        "node": true,
         "es2021": true,
         "jest/globals": true
     },
@@ -9,47 +10,24 @@ module.exports = {
     },
     extends: [
         "eslint:recommended",
+        "plugin:jest/recommended",
         // "plugin:vue/essential",
         // "plugin:@typescript-eslint/recommended"
     ],
     parserOptions: {
         "ecmaVersion": 12,
         // "parser": "@typescript-eslint/parser",
-        // "sourceType": "module"
+        "sourceType": "module"
     },
     plugins: [
         // "vue",
         // "@typescript-eslint"
     ],
     rules: {
-        "semi": [
-            2,
-            "never"
-        ],
-        "comma-dangle": [
-            "error",
-            "never"
-        ],
-        "no-param-reassign": [
-            0
-        ],
-        "func-names": [
-            0
-        ],
-        "import/no-extraneous-dependencies": [
-            0
-        ],
-        "import/no-unresolved": [
-            2,
-            {
-                "ignore": [
-                    "dayjs"
-                ]
-            }
-        ],
-        "import/extensions": [
-            2,
-            "never"
-        ]
+        // "off"或0 -关闭规则
+        // "warn" 或1 - 开启规则, 使用警告 程序不会退出
+        // "error"或2 - 开启规则, 使用错误 程序退出
+        "no-unused-vars": 'off',
+        "no-extra-semi": 'off'
     }
 }
