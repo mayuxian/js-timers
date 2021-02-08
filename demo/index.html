@@ -4,7 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://unpkg.com/vue@next"></script>
+  <script src="https://unpkg.com/vue@next">
+  </script>
   <!-- import CSS -->
   <link rel="stylesheet" href="https://unpkg.com/element-plus/lib/theme-chalk/index.css">
   <!-- import JavaScript -->
@@ -37,6 +38,7 @@
       </el-radio-group>
      </div>
       <div>倒计时:{{remainSeconds}}s</div>
+      <div>倒计时remainingSeconds:{{remainingSeconds}}s</div>
       <div>{{message}}</div>
     </div>
   </script>
@@ -64,6 +66,7 @@
   <div id='app'>
     <timers-demo></timers-demo>
   </div>
+
   <script>
     const options = {
       el: "#app",
@@ -86,30 +89,24 @@
       template: '#countdowntimer-tempalte',
       data: function () {
         return {
-          // remainSeconds: 10,
+          remainSeconds: 10,
           message: '',
           seconds: 10,
           countDownMode: 'once',
-          timer: {
-            remainingSeconds: 10
-          }
         }
       },
-      computed: {
-        remainSeconds() {
-          const val = this.timer.remainingSeconds;
-          console.log(val)
-          return val;
-        }
-      },
+      // computed: {
+      //   remainSeconds() {
+      //     const val = this.timer.remainingSeconds;
+      //     console.log(val)
+      //     return val;
+      //   }
+      // },
       created() {
         this.timer = new CountDownTimer();
-        // this.timer.tick = (remainSeconds) => {
-        //   this.remainSeconds = remainSeconds;
-        // }
-        // this.$watch('timer.remainingSeconds', (remainSeconds) => {
-        //   this.remainSeconds = remainSeconds;
-        // })
+        this.timer.tick = (remainSeconds) => {
+          this.remainSeconds = remainSeconds;
+        }
         this.timer.onTimeout = () => {
           this.message = '已超时'
         }
@@ -123,14 +120,36 @@
           this.timer.start();
         }
       },
-      watch: {
-        'timer.remainingSeconds': {
-          // deep: true,
-          handler(newVal, oldval) {
-            // this.remainSeconds = newVal
-          },
-        },
-      },
+      // setup(props) {
+      //   const timer = new CountDownTimer();
+      //   const rTimer = reactive(timer);
+      //   // rTimer.tick = (remainSeconds) => {
+      //   //   this.remainSeconds = remainSeconds;
+      //   // }
+      //   const state = reactive(
+      //     {
+      //       // remainSeconds: 10,
+      //       message: '',
+      //       seconds: 10,
+      //       countDownMode: 'once',
+      //     }
+      //   )
+      //   timer.onTimeout = () => {
+      //     state.message = '已超时'
+      //   }
+      //   function onStart() {
+      //     rTimer.stop();
+      //     state.message = '';
+      //     rTimer.timeoutMode = state.countDownMode;
+      //     rTimer.timeoutSeconds = state.seconds
+      //     rTimer.start();
+      //   }
+      //   return {
+      //     ...toRefs(state),
+      //     onStart,
+      //     ...toRefs(rTimer)
+      //   }
+      // }
     })
     app.mount('#app')
   </script>
