@@ -1,6 +1,6 @@
 {
   "name": "js-timers",
-  "version": "0.2.1-beta",
+  "version": "0.2.1",
   "description": "timer: Timer used in browser,More accurate than setInterval; count-down-timer;",
   "main": "index.min.js",
   "module": "esm/index.js",

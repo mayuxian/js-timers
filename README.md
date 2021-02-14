@@ -7,7 +7,7 @@
 
    **Timer** used in browser,More accurate than **setInterval** .
 
-   Because JavaScript is a single thread,  **setInterval ** will be affected by the execution of other events in the process of running, resulting in the delay of timer, and the delay will gradually accumulate, resulting in larger timer deviation
+   Because JavaScript is a single thread,  **setInterval** will be affected by the execution of other events in the process of running, resulting in the delay of timer, and the delay will gradually accumulate, resulting in larger timer deviation
 
    This module is realized through **setTimeout**, and the deviation is compensated and corrected
 
