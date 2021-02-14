@@ -1,11 +1,11 @@
-# js-timer
+# js-timers
 
 
 ## Include modules
 
 1. class : **Timer**
 
-   **Timer** used in browser,More accurate than **setInterval**.
+   **Timer** used in browser,More accurate than **setInterval** .
 
    Because JavaScript is a single thread,  **setInterval ** will be affected by the execution of other events in the process of running, resulting in the delay of timer, and the delay will gradually accumulate, resulting in larger timer deviation
 
