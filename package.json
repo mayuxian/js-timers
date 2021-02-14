@@ -1,6 +1,6 @@
 {
   "name": "js-timers",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "timer: Timer used in browser,More accurate than setInterval; count-down-timer;",
   "main": "index.min.js",
   "module": "esm/index.js",
@@ -26,7 +26,9 @@
     "settimeout",
     "js-timers",
     "countdown",
-    "count-down"
+    "count-down",
+    "定时器",
+    "倒计时"
   ],
   "jest": {
     "roots": [
