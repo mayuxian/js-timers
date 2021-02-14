@@ -76,6 +76,35 @@ function main(){
        //Timer interval trigger event
    }
  }
+
+```
+
+``` javascript
+// vue 2.x
+<template>
+   <div>
+      <!-- Bind the countdown. Suggest this way -->
+       {{timer.remainingSeconds}}
+    </div>
+</template>
+export default {
+  data(){
+   return {
+      timer:{
+          remainingSeconds
+      }
+    }
+  },
+  created(){
+       this.timer = new CountDownTimer(); //create instance
+       this.timer.timeoutSeconds = 60 // default: 60s
+       this.timer.missTickEnabled = false //deault:false, false:When the countdown error exceeds the time interval, false will be executed immediately. true:Otherwise, miss the tick event.
+       this.timer.tick = (remainingSeconds) => {
+           //remainingSeconds is remaining time
+           //Timer interval trigger event
+       }
+  }
+}
 ```
 
 
