@@ -51,7 +51,11 @@ import { Timer } from 'js-timers'
 function main(){
    this._timer = new Timer(); //create instance
    this._timer.interval = 1000 // default: 1000ms
-   this._timer.missTickEnabled = false //deault:false, false:When the countdown error exceeds the time interval, false will be executed immediately. true:Otherwise, miss the tick event.
+   // deault:false
+   // false:When the countdown error exceeds the time interval, 
+   //       will be executed immediately tick event. 
+   // true:Otherwise, miss the tick event.
+   this._timer.missTickEnabled = false
    this._timer.tick = () => {
        //Timer interval trigger event
    }
