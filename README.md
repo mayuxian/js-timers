@@ -98,6 +98,11 @@ export default {
   created(){
        this.timer = new CountDownTimer(); //create instance
        this.timer.timeoutSeconds = 60 // default: 60s
+       // the mode:  default:once 
+       // once:Stop when the countdown is over  倒计时结束后立刻停止
+       // loop:after the timer stop,restart   倒计时结束后重新启动
+       // reset:reset countdown after user operation 用户操作则倒计时重新开始
+       this.timer.timeoutMode='once' 
        this.timer.missTickEnabled = false //deault:false, false:When the countdown error exceeds the time interval, false will be executed immediately. true:Otherwise, miss the tick event.
        this.timer.tick = (remainingSeconds) => {
            //remainingSeconds is remaining time
