@@ -1,6 +1,6 @@
 {
   "name": "js-timers",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "包含定时器：浏览器中使用的定时器，通过补偿比setInterval更精准；倒计时定时器；(timer: Timer used in browser,More accurate than setInterval; count-down-timer;)",
   "main": "index.min.js",
   "module": "esm/index.js",
