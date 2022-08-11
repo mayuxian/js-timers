@@ -13,10 +13,8 @@ coverage
 
 # build
 /test
-/locale
 /plugin
 /dist
-/esm
 /index.d.ts
 *.min.js
 
