@@ -20,14 +20,15 @@
     "lint"
   ],
   "keywords": [
-    "time",
     "timer",
-    "clock",
-    "settimeout",
-    "js-timer",
-    "js-timers",
+    "time",
     "countdown",
     "count-down",
+    "setInterval",
+    "setTimeout",
+    "js-timer",
+    "js-timers",
+    "clock",
     "定时器",
     "倒计时"
   ],
