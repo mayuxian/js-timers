@@ -49,14 +49,14 @@ import { Timer } from 'js-timers'
 
 // Example
 function main(){
-   this._timer = new Timer(); //create instance
-   this._timer.interval = 1000 // default: 1000ms
+   this.timer = new Timer(); //create instance
+   this.timer.interval = 1000 // default: 1000ms
    // deault:false
    // false:When the countdown error exceeds the time interval, 
    //       will be executed immediately tick event. 
    // true:Otherwise, miss the tick event.
-   this._timer.missTickEnabled = false
-   this._timer.tick = () => {
+   this.timer.missTickEnabled = false
+   this.timer.tick = () => {
        //Timer interval trigger event
    }
  }
@@ -72,15 +72,15 @@ import { CountDownTimer } from 'js-timers'
 
 // Example
 function main(){
-   this._timer = new CountDownTimer(); //create instance
-   this._timer.timeoutSeconds = 60 // default: 60s
+   this.timer = new CountDownTimer(); //create instance
+   this.timer.timeoutSeconds = 60 // default: 60s
    // the mode:  default:once 
    // once:Stop when the countdown is over  倒计时结束后立刻停止
    // loop:after the timer stop,restart   倒计时结束后重新启动
    // reset:reset countdown after user operation 用户操作则倒计时重新开始
    this.timer.timeoutMode='once' 
-   this._timer.missTickEnabled = false //deault:false, false:When the countdown error exceeds the time interval, false will be executed immediately. true:Otherwise, miss the tick event.
-   this._timer.tick = (remainingSeconds) => {
+   this.timer.missTickEnabled = false //deault:false, false:When the countdown error exceeds the time interval, false will be executed immediately. true:Otherwise, miss the tick event.
+   this.timer.tick = (remainingSeconds) => {
        //remainingSeconds is remaining time
        //Timer interval trigger event
    }
