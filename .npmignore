@@ -4,34 +4,42 @@
 # IDE
 .idea
 
+# file
+examples/
+types
+coverage
+test
+types
+CONTRIBUTING.md
+docs
+
 # npm
 node_modules
 yarn.lock
 package-lock.json
+pnpm-lock.yaml
+pnpm-workspace.yaml
 
-# jest
-coverage
-
-# dev
-src
-test
-types
-build
+# config
+tsconfig.json
+tsup.config.ts
+commitlint.config.ts
 babel.config.js
 prettier.config.js
+.prettierrc
+.gitignore
 .eslintrc.json
 .eslintrc.js
 .eslintignore
 .editorconfig
 jest.config.js
-
-#doc
-CONTRIBUTING.md
-docs
-
-#other
-.travis.yml
+.changeset
+.husky
 .github
-demo
+.travis.yml
+.vitepress
+.changeset
 todo
 *.tgz
+
+

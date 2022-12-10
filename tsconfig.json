@@ -1,43 +1,41 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "useDefineForClassFields": true,
-    "allowSyntheticDefaultImports": true,
-    "allowJs": true,
+    "target": "ES2017",
     "module": "esnext",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "moduleResolution": "node",
-    "strict": true,
-    "jsx": "preserve",
-    "sourceMap": true,
-    "resolveJsonModule": true,
     "esModuleInterop": true,
-    "removeComments": true,
-    "noUnusedLocals": false,
-    "importHelpers": false, // 从 tslib 导入辅助工具函数（比如 __extends， __rest等）
-    "lib": [
-      "esnext",
-      "dom"
-    ],
+    "strict": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "declaration": true,
+    "declarationDir": "./types",
+    "resolveJsonModule": true,
     "baseUrl": ".",
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "noUnusedLocals": true,
+    "jsx": "react-jsx",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    },
-    "types": [
-      "element-plus/global"
-    ]
+      "@vmejs/shared": ["./packages/shared/index.ts"],
+      "@vmejs/shared/*": ["./packages/shared/*"],
+      "@vmejs/core": ["./packages/core/index.ts"],
+      "@vmejs/core/*": ["./packages/core/*"],
+      "@vmejs/vue-hooks": ["./packages/vue-hooks/index.ts"],
+      "@vmejs/vue-hooks/*": ["./packages/vue-hooks/*"],
+      "@vmejs/react-hooks": ["./packages/react-hooks/index.ts"],
+      "@vmejs/react-hooks/*": ["./packages/react-hooks/*"]
+    }
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.jsx",
-    "src/**/*.tsx",
-    "build/**/*.ts",
-    "build/**/*.d.ts",
-    "auto-import/*.d.ts",
-    "types/**/*.d.ts",
-    "types/*.d.ts",
-    "legacy.d.ts"
-  ]
+    "packages",
+    "docs/.vitepress/components/*.vue",
+    "docs/.vitepress/*.ts",
+    "meta",
+    "vitest.config.ts",
+    "*.d.ts",
+    "playgrounds",
+    "playgrounds/react/src"
+  ],
+  "exclude": ["node_modules", "**/**/*.md", "**/dist", "packages/.test", "packages/_docs", "dist"]
 }

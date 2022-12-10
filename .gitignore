@@ -1,22 +1,13 @@
-# OSX
 .DS_Store
-
-# IDE
-.idea
+.history
 .vscode
-
-# npm
+.idea
+.eslintcache
+.pnpm-debug.log
+*.local
+dist
 node_modules
-
-# jest
+types
 coverage
 
-# build
-/test
-/plugin
-/dist
-/index.d.ts
-*.min.js
-
-#dev
-demo.js
+.changeset/pre.json

@@ -1,4 +1,4 @@
-import { ITiming, TimerOptions, TimerSatus } from "./core";
+import { ITiming, TimerOptions, TimerSatus } from './core';
 export class SetTimeoutTimer implements ITiming {
   private _status: TimerSatus = TimerSatus.none;
   private _timerHandler: any;

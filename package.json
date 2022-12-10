@@ -1,51 +1,60 @@
 {
-  "name": "js-timers",
-  "version": "2.0.0",
-  "description": "包含定时器：浏览器中使用的定时器，通过补偿比setInterval更精准；倒计时定时器；(timer: Timer used in browser,More accurate than setInterval; count-down-timer;)",
-  "main": "./dist/js-timers.umd.js",
-  "module": "./dist/js-timers.umd.es.js",
-  "types": "index.d.ts",
-  "private": false,
+  "name": "vmejs",
+  "version": "0.0.1-alpha.4",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "scripts": {
-    "dev": "vite --mode development --host ",
-    "build": "vite build ",
-    "preview": "vite preview",
-    "test": "vitest --config ./vitest.config.ts",
-    "coverage": "vitest run --coverage --config ./vitest.config.ts"
+    "preinstall": "npx only-allow pnpm",
+    "prepare": "husky install",
+    "dev": "tsup --watch",
+    "dev:vue": "pnpm -C playgrounds/vue dev",
+    "dev:react": "pnpm -C playgrounds/react dev",
+    "build": "tsup",
+    "docs:dev": "pnpm -C docs dev",
+    "docs:build": "pnpm run -C docs build",
+    "change": "changeset",
+    "change:version": "changeset version",
+    "release": "pnpm build && pnpm release:only",
+    "release:only": "changeset publish",
+    "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx,.json --max-warnings 0 --cache",
+    "lint:fix": "pnpm run lint --fix",
+    "format": "prettier --write --cache .",
+    "test": "vitest test",
+    "coverage": "vitest run --coverage"
   },
-  "keywords": [
-    "timer",
-    "time",
-    "countdown",
-    "count-down",
-    "setInterval",
-    "setTimeout",
-    "js-timer",
-    "js-timers",
-    "clock",
-    "定时器",
-    "倒计时"
-  ],
-  "homepage": "https://github.com/mayuxian/js-timers/blob/main/README.md",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mayuxian/js-timers.git"
+  "lint-staged": {
+    "*.{vue,js,ts,jsx,tsx,json}": [
+      "eslint --cache --fix",
+      "pnpm format"
+    ]
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
-  "bugs": {
-    "url": "https://github.com/mayuxian/js-timers/issues"
+    "access": "public"
   },
   "devDependencies": {
-    "typescript": "^4.5.4",
-    "vite": "^2.9.9",
-    "vitest": "^0.25.6"
-  },
-  "exports": {
-    ".": {
-      "import": "./dist/js-timers.es.js",
-      "require": "./dist/js-timers.umd.js"
-    }
+    "@changesets/changelog-github": "^0.4.7",
+    "@changesets/cli": "^2.25.2",
+    "@commitlint/cli": "^17.2.0",
+    "@commitlint/config-conventional": "^17.2.0",
+    "@types/node": "^18.11.9",
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.9",
+    "@typescript-eslint/eslint-plugin": "^5.42.1",
+    "@typescript-eslint/parser": "^5.42.1",
+    "@vitest/coverage-c8": "^0.25.1",
+    "eslint": "^8.27.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.2",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tsup": "^6.4.0",
+    "typescript": "^4.8.4",
+    "vitest": "^0.25.1"
   }
 }
