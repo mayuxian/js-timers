@@ -1,122 +1,20 @@
-# js-timers
+## 本地开发和调试
 
+1. 本地打包
+- 命令：npm pack
+- 通过.npmignore来配置包内包含的问题
 
-## Include modules
+2. 本地联调
+- 本地发布npm 命令：npm link 
+- 本地项目安装npm包 命令： npm link 包名
+- 移除本地发布 命令：npm unlink
 
-1. class : **Timer**
-
-   **Timer** used in browser,More accurate than **setInterval** .
-
-   Because JavaScript is a single thread,  **setInterval** will be affected by the execution of other events in the process of running, resulting in the delay of timer, and the delay will gradually accumulate, resulting in larger timer deviation
-
-   This module is realized through **setTimeout**, and the deviation is compensated and corrected
-
-   For details, please refer to demo: https://github.com/mayuxian/js-timers/tree/main/demo
-
-2. class : **CountDownTimer**
-
-   It can set time interval to execute countdown, which is based on timer in this library.
-
-
-
-## Installing
-
-Using npm:
-
-```bash
-$ npm install js-timers
-```
-
-Using bower:
-
-```bash
-$ bower install js-timers
-```
-
-Using yarn:
-
-```bash
-$ yarn add js-timers
-```
-
- 	
-
-###  Module : Timer
-
-``` javascript
-// import Timer
-import { Timer } from 'js-timers'
-
-// Example
-function main(){
-   this.timer = new Timer(); //create instance
-   this.timer.interval = 1000 // default: 1000ms
-   // deault:false
-   // false:When the countdown error exceeds the time interval, 
-   //       will be executed immediately tick event. 
-   // true:Otherwise, miss the tick event.
-   this.timer.missTickEnabled = false
-   this.timer.tick = () => {
-       //Timer interval trigger event
-   }
- }
-```
-
-
-
-###  Module : CountDownTimer
-
-```javascript
-// import Timer
-import { CountDownTimer } from 'js-timers'
-
-// Example
-function main(){
-   this.timer = new CountDownTimer(); //create instance
-   this.timer.timeoutSeconds = 60 // default: 60s
-   // the mode:  default:once 
-   // once:Stop when the countdown is over  倒计时结束后立刻停止
-   // loop:after the timer stop,restart   倒计时结束后重新启动
-   // reset:reset countdown after user operation 用户操作则倒计时重新开始
-   this.timer.timeoutMode='once' 
-   this.timer.missTickEnabled = false //deault:false, false:When the countdown error exceeds the time interval, false will be executed immediately. true:Otherwise, miss the tick event.
-   this.timer.tick = (remainingSeconds) => {
-       //remainingSeconds is remaining time
-       //Timer interval trigger event
-   }
- }
-
-```
-
-``` javascript
-// vue 2.x
-<template>
-   <div>
-      <!-- Bind the countdown. Suggest this way -->
-       {{timer.remainingSeconds}}
-    </div>
-</template>
-export default {
-  data(){
-   return {
-      timer:{
-          remainingSeconds
-      }
-    }
-  },
-  created(){
-       this.timer = new CountDownTimer(); //create instance
-       this.timer.timeoutSeconds = 60 // default: 60s
-       this.timer.missTickEnabled = false //deault:false, false:When the countdown error exceeds the time interval, false will be executed immediately. true:Otherwise, miss the tick event.
-       this.timer.tick = (remainingSeconds) => {
-           //remainingSeconds is remaining time
-           //Timer interval trigger event
-       }
-  }
-}
-```
-
-
-
-### Thx. Enjoy It !
-
+3. 发布 (每次发布版本，要升级package.json中的version)
+- 命令： npm login    //账号密码登录
+- 命令： npm  publish
+- 命令： npm unpublish  包名 --force //删除已发布包,谨慎使用。防止别人已使用，删除导致引用者无法使用
+ 
+ version版本的含义：v1.1.1
+ 大版本：不兼容，重构等级别的构建
+ 小版本：新增功能等
+ 修订版本：修复bug等
