@@ -53,4 +53,4 @@ module.exports = {
   endOfLine: 'auto',
   wrapAttributes: false,
   // sortAttributes: false
-}
+};

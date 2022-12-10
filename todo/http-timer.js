@@ -2,9 +2,9 @@
 // import "regenerator-runtime/runtime";
 // import "@babel/polyfill";
 
-import { Timer } from './timer.js'
+import { Timer } from './timer.js';
 class HttpTimer {
-  constructor () {
+  constructor() {
     this._timer = new Timer();
     this._timer.interval = 300;
     this._retryCount = 3;
@@ -32,29 +32,31 @@ class HttpTimer {
 
   setOptions({ retryCount, checkResponseCb, interval }) {
     this._retryCount = retryCount || 3;
-    this._checkResponseCb = checkResponseCb
-    this._timer.interval = interval
+    this._checkResponseCb = checkResponseCb;
+    this._timer.interval = interval;
   }
 
   async requestAsync(promise, ...args) {
     // new Promise((resolve,reject)=>{})
     let count = 0;
     try {
-      const response = await this._request(promise, ...args)
-      Promise.resolve(response) //请求不通过,会抛出异常
+      const response = await this._request(promise, ...args);
+      Promise.resolve(response); //请求不通过,会抛出异常
     } catch (err) {
       this._timer.tick = async () => {
-        count++//重试次数累加
-        this._request(promise, ...args).then(res => {
-          Promise.resolve(res) //请求不通过,会抛出异常
-        }).catch(error => {
-          if (count >= this._retryCount) {
-            this._timer.stop();
-            this.tick = null;
-            Promise.reject(error)
-          }
-        })
-      }
+        count++; //重试次数累加
+        this._request(promise, ...args)
+          .then((res) => {
+            Promise.resolve(res); //请求不通过,会抛出异常
+          })
+          .catch((error) => {
+            if (count >= this._retryCount) {
+              this._timer.stop();
+              this.tick = null;
+              Promise.reject(error);
+            }
+          });
+      };
       this._timer.start();
     }
   }
@@ -78,15 +80,15 @@ class HttpTimer {
   async _request(promise, ...args) {
     let isPass = true;
     try {
-      const result = await promise(...args)
+      const result = await promise(...args);
       if (this.isFunction(this.checkResponseCb)) {
         isPass = this.checkResponseCb(result);
       }
       if (isPass) {
-        Promise.resolve(result)
+        Promise.resolve(result);
       } else {
         //没通过,则callback({}),主要用于通信成功,后台业务逻辑错误
-        Promise.reject(result)
+        Promise.reject(result);
       }
     } catch (err) {
       isPass = false;
@@ -94,24 +96,21 @@ class HttpTimer {
         isPass = this.checkResponseCb(err);
       }
       if (!isPass) {
-        Promise.reject(err)
+        Promise.reject(err);
         return;
       }
     }
   }
 
-
   isPromise(val) {
-    return val && this.isFunction(val.then) && this.isFunction(val.catch)
+    return val && this.isFunction(val.then) && this.isFunction(val.catch);
   }
   isFunction(val) {
-    return val && this._toString.call(val) === '[object Function]'
+    return val && this._toString.call(val) === '[object Function]';
   }
   isObject(val) {
-    return val && this._toString.call(val) === '[object Object]'
+    return val && this._toString.call(val) === '[object Object]';
   }
 }
 
-export {
-  HttpTimer
-}
+export { HttpTimer };

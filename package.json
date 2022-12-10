@@ -1,5 +1,5 @@
 {
-  "name": "vmejs",
+  "name": "js-timers",
   "version": "0.0.1-alpha.4",
   "description": "",
   "main": "index.js",
@@ -31,9 +31,6 @@
       "pnpm format"
     ]
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "devDependencies": {
     "@changesets/changelog-github": "^0.4.7",
     "@changesets/cli": "^2.25.2",
@@ -56,5 +53,27 @@
     "tsup": "^6.4.0",
     "typescript": "^4.8.4",
     "vitest": "^0.25.1"
+  },
+   "keywords": [
+    "timer",
+    "time",
+    "countdown",
+    "count-down",
+    "setInterval",
+    "setTimeout",
+    "js-timer",
+    "js-timers",
+    "clock",
+    "定时器",
+    "倒计时"
+  ],
+  "homepage": "https://github.com/mayuxian/js-timers/blob/main/README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mayuxian/js-timers.git"
+  },
+  "publishConfig": { "registry": "https://registry.npmjs.org/" },
+  "bugs": {
+    "url": "https://github.com/mayuxian/js-timers/issues"
   }
 }

@@ -1,56 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>http-timer</title>
+    <!-- 引入timer模块 -->
+    <script type="module">
+      import { HttpTimer } from './../esm/http-timer.js';
+      window.HttpTimer = HttpTimer;
+    </script>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>http-timer</title>
-  <!-- 引入timer模块 -->
-  <script type="module">
-    import { HttpTimer } from './../esm/http-timer.js';
-    window.HttpTimer = HttpTimer;
-  </script>
-</head>
-
-<body>
-  <div style="margin:10px 0">
-    <button onclick="onRequest()" style="width:100px">请求</button>
-    <div>
-      <span id='info'></span>
+  <body>
+    <div style="margin: 10px 0">
+      <button onclick="onRequest()" style="width: 100px">请求</button>
+      <div>
+        <span id="info"></span>
+      </div>
     </div>
-  </div>
-  <script>
-    const _interval = 1000;
-    async function onRequest() {
-      const httpTimer = new HttpTimer();
-      try {
-        const res = await httpTimer.requestAsync(mockRequestAsync, 'arg1', 'arg2')
-        showText('info', res)
-      } catch (err) {
-        console.log(err);
-        showText('info', err?.message)
+    <script>
+      const _interval = 1000;
+      async function onRequest() {
+        const httpTimer = new HttpTimer();
+        try {
+          const res = await httpTimer.requestAsync(mockRequestAsync, 'arg1', 'arg2');
+          showText('info', res);
+        } catch (err) {
+          console.log(err);
+          showText('info', err?.message);
+        }
       }
-    }
 
-    count = 0;
-    function mockRequestAsync(...args) {
-      console.log('args:', args);
-      new Promise((resolve, reject) => {
-        setTimeout(() => {
-          count++
-          if (count >= 3) {
-            resolve('请求成功')
-          } else {
-            reject(new Error('请求异常'))
-          }
-        }, 1000);
-      })
-    }
-    function showText(eleId, text) {
-      const ele = document.getElementById(eleId);
-      ele.innerText = text
-    }
-  </script>
-</body>
-
+      count = 0;
+      function mockRequestAsync(...args) {
+        console.log('args:', args);
+        new Promise((resolve, reject) => {
+          setTimeout(() => {
+            count++;
+            if (count >= 3) {
+              resolve('请求成功');
+            } else {
+              reject(new Error('请求异常'));
+            }
+          }, 1000);
+        });
+      }
+      function showText(eleId, text) {
+        const ele = document.getElementById(eleId);
+        ele.innerText = text;
+      }
+    </script>
+  </body>
 </html>

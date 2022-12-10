@@ -1,13 +1,13 @@
-import { defineConfig, UserConfig } from 'vite'
-import { resolve } from 'path'
+import { defineConfig, UserConfig } from 'vite';
+import { resolve } from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig((config: UserConfig) => {
   /* eslint-disable @typescript-eslint/no-unused-vars */
-  const isDev = config.mode === 'development'
-  const isDevBuild = config.mode === 'devbuild'
-  const isTest = config.mode === 'test'
-  const isProd = config.mode === 'production'
+  const isDev = config.mode === 'development';
+  const isDevBuild = config.mode === 'devbuild';
+  const isTest = config.mode === 'test';
+  const isProd = config.mode === 'production';
   /* eslint-enable  */
   return {
     base: isDev ? './' : '/', // 打包路径
@@ -28,9 +28,9 @@ export default defineConfig((config: UserConfig) => {
             //或者安装postcss-normalize-charset，应该也可以实现去除charset规则
             postcssPlugin: 'internal:charset-removal',
             AtRule: {
-              charset: atRule => {
+              charset: (atRule) => {
                 if (atRule.name === 'charset') {
-                  atRule.remove()
+                  atRule.remove();
                 }
               },
             },
@@ -42,7 +42,7 @@ export default defineConfig((config: UserConfig) => {
       lib: {
         entry: resolve(__dirname, 'src/index.ts'),
         name: 'ViteLib',
-        fileName: format => `vite-lib-template.${format}.js`,
+        fileName: (format) => `vite-lib-template.${format}.js`,
       },
       rollupOptions: {
         // 确保外部化处理那些你不想打包进库的依赖
@@ -50,9 +50,9 @@ export default defineConfig((config: UserConfig) => {
         output: {
           // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
           globals: {
-            vue: 'Vue'
-          }
-        }
+            vue: 'Vue',
+          },
+        },
       },
       target: 'esnext', //默认'modules',modules模式Opera、UC、百度浏览器不支持，由于对于移动端，不建议设置modules模式
       assetsInlineLimit: 4096, //默认4096,小于此阈值的导入或引用资源将内联为 base64 编码，以避免额外的 http 请求
@@ -91,5 +91,5 @@ export default defineConfig((config: UserConfig) => {
         // },
       },
     },
-  }
-})
+  };
+});

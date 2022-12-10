@@ -1,159 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://unpkg.com/vue@next">
-  </script>
-  <!-- import CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/element-plus/lib/theme-chalk/index.css">
-  <!-- import JavaScript -->
-  <script src="https://unpkg.com/element-plus/lib/index.full.js"></script>
-  <script type="module">
-    import { CountDownTimer } from './../esm/count-down-timer.js';
-    window.CountDownTimer = CountDownTimer;
-  </script>
-  <title>js-timers的Demo</title>
-  <style>
-    body {
-      width: 100;
-      height: 100%;
-      box-sizing: border-box;
-    }
-  </style>
-</head>
-
-<body>
-  <script type="text/x-template" id="countdowntimer-tempalte">
-    <div>
-      倒计时:<el-input v-model="seconds" size="small" style="width:100px"></el-input>秒
-      <el-button @click="onStart" size="small">开始</el-button>
-     <div style="margin:10px 0">
-      模式:
-      <el-radio-group v-model="countDownMode" size="medium">
-        <el-radio-button label="once">once</el-radio-button>
-        <el-radio-button label="loop">loop</el-radio-button>
-        <el-radio-button label="reset">reset</el-radio-button>
-      </el-radio-group>
-     </div>
-      <div>倒计时:{{remainSeconds}}s</div>
-      <div>倒计时remainingSeconds:{{remainingSeconds}}s</div>
-      <div>{{message}}</div>
-    </div>
-  </script>
-  <script type="text/x-template" id="timers-tempalte">
-    Note: You can view the demo by installing http-server, and then running JS-timers root directory boot
-    <div>
-      <el-menu mode="horizontal"
-      :default-active="activeIndex"
-      @select="(key)=>activeIndex=key">
-        <el-menu-item index="1">
-          <span>timer测试</span>
-        </el-menu-item>
-        <el-menu-item index="2">
-          <span>count-donw-timer测试</span>
-        </el-menu-item>
-        <!-- <el-menu-item index="3">
-          <span>http-timer测试</span>
-        </el-menu-item> -->
-      </el-menu>
-      <iframe v-if="activeIndex==='1'" src="./timer.html" style="width:100%;height:100vh"  frameborder="0"></iframe>
-      <countdowntimer-demo v-if="activeIndex==='2'"></countdowntimer-demo>
-      <!-- <iframe v-if="activeIndex==='3'" src="./http-timer.html"  style="width:100%;height:100%" frameborder="0"></iframe> -->
-    </div>
-  </script>
-  <div id='app'>
-    <timers-demo></timers-demo>
-  </div>
-
-  <script>
-    const options = {
-      el: "#app",
-      data: function () {
-        return {
-        }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@next"></script>
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/element-plus/lib/theme-chalk/index.css" />
+    <!-- import JavaScript -->
+    <script src="https://unpkg.com/element-plus/lib/index.full.js"></script>
+    <script type="module">
+      import { CountDownTimer } from './../esm/count-down-timer.js';
+      window.CountDownTimer = CountDownTimer;
+    </script>
+    <title>js-timers的Demo</title>
+    <style>
+      body {
+        width: 100;
+        height: 100%;
+        box-sizing: border-box;
       }
-    }
-    const app = Vue.createApp(options)
-    app.use(ElementPlus);
-    app.component("timers-demo", {
-      template: '#timers-tempalte',
-      data: function () {
-        return {
-          activeIndex: '1',
-        }
-      }
-    })
-    app.component("countdowntimer-demo", {
-      template: '#countdowntimer-tempalte',
-      data: function () {
-        return {
-          remainSeconds: 10,
-          message: '',
-          seconds: 10,
-          countDownMode: 'once',
-        }
-      },
-      // computed: {
-      //   remainSeconds() {
-      //     const val = this.timer.remainingSeconds;
-      //     console.log(val)
-      //     return val;
-      //   }
-      // },
-      created() {
-        this.timer = new CountDownTimer();
-        this.timer.tick = (remainSeconds) => {
-          this.remainSeconds = remainSeconds;
-        }
-        this.timer.onTimeout = () => {
-          this.message = '已超时'
-        }
-      },
-      methods: {
-        onStart() {
-          this.timer.stop();
-          this.message = '';
-          this.timer.timeoutMode = this.countDownMode;
-          this.timer.timeoutSeconds = this.seconds
-          this.timer.start();
-        }
-      },
-      // setup(props) {
-      //   const timer = new CountDownTimer();
-      //   const rTimer = reactive(timer);
-      //   // rTimer.tick = (remainSeconds) => {
-      //   //   this.remainSeconds = remainSeconds;
-      //   // }
-      //   const state = reactive(
-      //     {
-      //       // remainSeconds: 10,
-      //       message: '',
-      //       seconds: 10,
-      //       countDownMode: 'once',
-      //     }
-      //   )
-      //   timer.onTimeout = () => {
-      //     state.message = '已超时'
-      //   }
-      //   function onStart() {
-      //     rTimer.stop();
-      //     state.message = '';
-      //     rTimer.timeoutMode = state.countDownMode;
-      //     rTimer.timeoutSeconds = state.seconds
-      //     rTimer.start();
-      //   }
-      //   return {
-      //     ...toRefs(state),
-      //     onStart,
-      //     ...toRefs(rTimer)
-      //   }
-      // }
-    })
-    app.mount('#app')
-  </script>
+    </style>
+  </head>
 
-</body>
+  <body>
+    <script type="text/x-template" id="countdowntimer-tempalte">
+      <div>
+        倒计时:<el-input v-model="seconds" size="small" style="width:100px"></el-input>秒
+        <el-button @click="onStart" size="small">开始</el-button>
+       <div style="margin:10px 0">
+        模式:
+        <el-radio-group v-model="countDownMode" size="medium">
+          <el-radio-button label="once">once</el-radio-button>
+          <el-radio-button label="loop">loop</el-radio-button>
+          <el-radio-button label="reset">reset</el-radio-button>
+        </el-radio-group>
+       </div>
+        <div>倒计时:{{remainSeconds}}s</div>
+        <div>倒计时remainingSeconds:{{remainingSeconds}}s</div>
+        <div>{{message}}</div>
+      </div>
+    </script>
+    <script type="text/x-template" id="timers-tempalte">
+      Note: You can view the demo by installing http-server, and then running JS-timers root directory boot
+      <div>
+        <el-menu mode="horizontal"
+        :default-active="activeIndex"
+        @select="(key)=>activeIndex=key">
+          <el-menu-item index="1">
+            <span>timer测试</span>
+          </el-menu-item>
+          <el-menu-item index="2">
+            <span>count-donw-timer测试</span>
+          </el-menu-item>
+          <!-- <el-menu-item index="3">
+            <span>http-timer测试</span>
+          </el-menu-item> -->
+        </el-menu>
+        <iframe v-if="activeIndex==='1'" src="./timer.html" style="width:100%;height:100vh"  frameborder="0"></iframe>
+        <countdowntimer-demo v-if="activeIndex==='2'"></countdowntimer-demo>
+        <!-- <iframe v-if="activeIndex==='3'" src="./http-timer.html"  style="width:100%;height:100%" frameborder="0"></iframe> -->
+      </div>
+    </script>
+    <div id="app">
+      <timers-demo></timers-demo>
+    </div>
 
+    <script>
+      const options = {
+        el: '#app',
+        data: function () {
+          return {};
+        },
+      };
+      const app = Vue.createApp(options);
+      app.use(ElementPlus);
+      app.component('timers-demo', {
+        template: '#timers-tempalte',
+        data: function () {
+          return {
+            activeIndex: '1',
+          };
+        },
+      });
+      app.component('countdowntimer-demo', {
+        template: '#countdowntimer-tempalte',
+        data: function () {
+          return {
+            remainSeconds: 10,
+            message: '',
+            seconds: 10,
+            countDownMode: 'once',
+          };
+        },
+        // computed: {
+        //   remainSeconds() {
+        //     const val = this.timer.remainingSeconds;
+        //     console.log(val)
+        //     return val;
+        //   }
+        // },
+        created() {
+          this.timer = new CountDownTimer();
+          this.timer.tick = (remainSeconds) => {
+            this.remainSeconds = remainSeconds;
+          };
+          this.timer.onTimeout = () => {
+            this.message = '已超时';
+          };
+        },
+        methods: {
+          onStart() {
+            this.timer.stop();
+            this.message = '';
+            this.timer.timeoutMode = this.countDownMode;
+            this.timer.timeoutSeconds = this.seconds;
+            this.timer.start();
+          },
+        },
+        // setup(props) {
+        //   const timer = new CountDownTimer();
+        //   const rTimer = reactive(timer);
+        //   // rTimer.tick = (remainSeconds) => {
+        //   //   this.remainSeconds = remainSeconds;
+        //   // }
+        //   const state = reactive(
+        //     {
+        //       // remainSeconds: 10,
+        //       message: '',
+        //       seconds: 10,
+        //       countDownMode: 'once',
+        //     }
+        //   )
+        //   timer.onTimeout = () => {
+        //     state.message = '已超时'
+        //   }
+        //   function onStart() {
+        //     rTimer.stop();
+        //     state.message = '';
+        //     rTimer.timeoutMode = state.countDownMode;
+        //     rTimer.timeoutSeconds = state.seconds
+        //     rTimer.start();
+        //   }
+        //   return {
+        //     ...toRefs(state),
+        //     onStart,
+        //     ...toRefs(rTimer)
+        //   }
+        // }
+      });
+      app.mount('#app');
+    </script>
+  </body>
 </html>
