@@ -1,11 +1,23 @@
 {
   "name": "js-timers",
-  "version": "0.0.1-alpha.4",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
-  "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
+  "keywords": [
+    "timer",
+    "time",
+    "countdown",
+    "count-down",
+    "setInterval",
+    "setTimeout",
+    "js-timer",
+    "js-timers",
+    "clock",
+    "定时器",
+    "倒计时"
+  ],
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",
@@ -54,19 +66,6 @@
     "typescript": "^4.8.4",
     "vitest": "^0.25.1"
   },
-   "keywords": [
-    "timer",
-    "time",
-    "countdown",
-    "count-down",
-    "setInterval",
-    "setTimeout",
-    "js-timer",
-    "js-timers",
-    "clock",
-    "定时器",
-    "倒计时"
-  ],
   "homepage": "https://github.com/mayuxian/js-timers/blob/main/README.md",
   "repository": {
     "type": "git",
